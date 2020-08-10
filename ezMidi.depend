@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1597025474 source:d:\developer\ezmidi\ezmidi.c
+	"ezMidi.h"
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+	<string.h>
+	<fluidsynth.h>
+	<unistd.h>
+	<windows.h>
+	<mmsystem.h>
+
+1597025620 source:d:\developer\ezmidi\test_main.c
+	"ezMidi.h"
+	<stdio.h>
+	<stdlib.h>
+
+1597023055 d:\developer\ezmidi\ezmidi.h
+	<stdint.h>
+
