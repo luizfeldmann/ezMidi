@@ -10,10 +10,11 @@
 	<windows.h>
 	<mmsystem.h>
 
-1597025620 source:d:\developer\ezmidi\test_main.c
+1597027047 source:d:\developer\ezmidi\test_main.c
 	"ezMidi.h"
 	<stdio.h>
 	<stdlib.h>
+	<conio.h>
 
 1597023055 d:\developer\ezmidi\ezmidi.h
 	<stdint.h>

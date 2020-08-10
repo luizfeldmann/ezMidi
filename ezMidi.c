@@ -589,7 +589,7 @@ void u16toarray(uint16_t value, uint8_t arr[2])
 }
 
 // reads a big-endian value with variable length from the file
-// each byte is 7-bit data and the 7th bit (leftmost) is a flag informing to continue reading the next byte
+// each byte is 7-bit data and the 8th bit (leftmost) is a flag informing to continue reading the next byte
 // saves the read value in a pointer and return the total number of bytes read
 int ReadVariableLength(const char* buffer, uint32_t bufflen, uint32_t *outvalue)
 {
@@ -921,9 +921,6 @@ int MidiFile_Save(const char* filename, const MidiFile_t *save)
 
             MidiEvent_t* event = &track->Events[e];
 
-            //if (event->interface->type != Midi_Event_Type_NoteOn && event->interface->type != Midi_Event_Type_NoteOff)
-            //    continue;
-
             trackLen += WriteVariableLength(&buffer[trackLen], 5, event->deltaTime);
             trackLen += event->interface->write_data(&buffer[trackLen], event);
         }
@@ -1089,11 +1086,10 @@ int MidiDevice_PlayNote(uint8_t key, uint8_t channel, uint8_t velocity, uint8_t 
 
 #endif
 
-//#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__WIN32__)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__WIN32__)
 
-// must include "-lwinmm" in linker options
 #include <windows.h>
-#include <mmsystem.h>
+#include <mmsystem.h> // must include "-lwinmm" in linker options
 
 HMIDIOUT    midiOutHandle;
 
@@ -1179,7 +1175,7 @@ int MidiDevice_PlayNote(uint8_t key, uint8_t channel, uint8_t velocity, uint8_t 
      return MidiSendShortMessage((state ? 0x90 : 0x80) + (channel & 0x0F), key, velocity, 0);
 }
 
-//#endif
+#endif
 
 int trivial_callback(MidiEvent_t* event, uint16_t track, uint32_t timeTicks, uint32_t timeUs)
 {
@@ -1528,7 +1524,7 @@ int8_t Midi_Transpose(MidiFile_t* file, const MidiTranspositionData_t* newKey)
         return 0;
     }
 
-    int8_t delta = newKey->tranposeDelta - oldKey->tranposeDelta; // how many octaves must we shift ?
+    int8_t delta = newKey->tranposeDelta - oldKey->tranposeDelta; // how many semitones must we shift ?
 
     for (uint16_t t = 0; t< file->nTrks; t++)
     {
